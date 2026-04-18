@@ -74,7 +74,7 @@ const ParallaxSection = ({ id, children, dark = false, className = "" }) => {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], [25, -25]);
   return (
-    <section ref={ref} id={id} className={`py-16 px-6 relative overflow-hidden ${dark ? 'bg-white/3' : 'bg-transparent'} ${className}`}>
+    <section ref={ref} id={id} className={`py-16 px-6 relative overflow-hidden ${dark ? 'bg-white/[0.02]' : 'bg-transparent'} ${className}`}>
       <motion.div style={{ y }} className="max-w-5xl mx-auto">
         {children}
       </motion.div>
@@ -306,7 +306,7 @@ export default function Portfolio() {
       </AnimatePresence>
 
       {/* ── NAV ────────────────────────────────────────────────── */}
-      <nav className={`fixed w-full top-0 z-30 transition-all duration-300 ${scrolled ? 'bg-gray-900/96 backdrop-blur-md shadow-lg shadow-black/25 py-2' : 'bg-transparent py-3'}`}>
+      <nav className={`fixed w-full top-0 z-30 transition-all duration-300 ${scrolled ? 'bg-slate-950/90 backdrop-blur-md shadow-lg shadow-black/40 py-2' : 'bg-transparent py-3'}`}>
         <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
           <a href="#hero" className="font-black text-sm tracking-wider"><G>SS</G></a>
 
@@ -408,7 +408,12 @@ export default function Portfolio() {
               3+ yrs Enterprise Data Engineering · BI · ML · Turning data into impactful decisions.
             </motion.p>
 
-
+            {/* "Actively Seeking" badge — like reference */}
+            <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }}>
+              <span className="inline-block bg-gradient-to-r from-gray-800 to-gray-700 border border-white/15 text-white text-xs font-semibold px-5 py-2.5 rounded-lg tracking-wide shadow-lg">
+                Actively Seeking <G>2025–2026 Opportunities</G>
+              </span>
+            </motion.div>
           </div>
 
           {/* RIGHT: circular photo + icon row + location */}
@@ -721,15 +726,16 @@ export default function Portfolio() {
       <ParallaxSection id="video" dark>
         <SH emoji="🎬" title="Video Presentation" sub="A short 1–2 minute overview of my portfolio, key projects, and what I bring to a data science role." />
         <Reveal>
-          <div className="max-w-3xl rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-black/40">
-            <video
-              controls
-              className="w-full"
-              poster=""
-            >
-              <source src="/Presentation.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+          <div className="bg-gray-800/60 border-2 border-dashed border-white/15 rounded-2xl aspect-video max-w-3xl flex flex-col items-center justify-center gap-4">
+            <motion.div animate={{ scale: [1, 1.08, 1] }} transition={{ duration: 3, repeat: Infinity }}
+              className="w-14 h-14 rounded-full bg-gradient-to-r from-pink-500 to-indigo-500 flex items-center justify-center shadow-lg shadow-pink-500/30">
+              <PlayCircle size={28} className="text-white" />
+            </motion.div>
+            <div className="text-center">
+              <p className="text-white font-semibold">Video Presentation — Coming Soon 🎥</p>
+              <p className="text-gray-500 text-sm mt-1">Replace with an embedded YouTube or Loom link once recorded</p>
+            </div>
+            <code className="text-xs text-gray-600 bg-gray-900/50 px-3 py-1.5 rounded font-mono">{"<iframe src='YOUR_VIDEO_URL' .../>"}</code>
           </div>
         </Reveal>
       </ParallaxSection>
@@ -807,7 +813,7 @@ export default function Portfolio() {
           <Reveal x={-20} className="md:col-span-2 space-y-4">
             {[
               { icon: <Mail size={16} />, label: "Email", value: "sanchithashetty95@gmail.com", href: "mailto:sanchithashetty95@gmail.com" },
-              { icon: <Phone size={16} />, label: "Phone", value: "+1 (612) 600-2393", href: "tel:+16126002393" },
+              { icon: <Phone size={16} />, label: "Phone", value: "Available on request", href: null },
               { icon: <MapPin size={16} />, label: "Location", value: "Syracuse, NY, USA", href: null },
             ].map(({ icon, label, value, href }) => (
               <div key={label} className="flex items-start gap-3">
